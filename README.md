@@ -29,8 +29,8 @@
 
 2. Клонируйте репозиторий проекта:
     ```bash
-    git clone https://www.github.com/NothingSpecial14/foodgram-project-master
-    cd foodgram-project-master 
+    git clone https://www.github.com/NothingSpecial14/foodgram-project
+    cd foodgram-project 
 
 
 ## Запуск проекта

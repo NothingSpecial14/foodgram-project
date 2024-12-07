@@ -1,0 +1,40 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Исходящие сообщения</title>
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+</head>
+<body class="body">
+{% include 'header.html' %}
+<main class="main container">
+    <div class="main__header">
+        <h2 class="main__title">Исходящие сообщения</h2>
+    </div>
+    <ul>
+        {% for message in messages %}
+        <li>
+            <strong>Кому:</strong> {{ message.recipient.username }}
+            <br>
+            <strong>Тема:</strong> {{ message.subject }}
+            <br>
+            {{ message.message_body }}
+            <br>
+            <form action="{% url 'message_del' message.id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type"submit">Удалить сообщение</button>
+            </form>
+        </li>
+        {% empty %}
+        <li>Нет входящих сообщений</li>
+        {% endfor %}
+    </ul>
+
+</main>
+{% include 'footer.html' %}
+</body>
+</html>

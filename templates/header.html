@@ -1,0 +1,39 @@
+{% if request.user.is_authenticated %}
+<header class="header">
+    <nav class="nav">
+        <div class="nav__container container">
+            <ul class="nav__items list">
+                <li class="nav__item nav__item_active"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                <li class="nav__item"><a href="{% url 'follows' %}" class="nav__link link">Мои подписки</a></li>
+                <li class="nav__item"><a href="{% url 'new_recipe' %}" class="nav__link link">Создать рецепт</a></li>
+                <li class="nav__item"><a href="{% url 'favorites' %}" class="nav__link link">Избранное</a></li>
+                <li class="nav__item"><a href="{% url 'shoplist' %}" class="nav__link link">Список покупок</a> <span class="badge badge_style_blue nav__badge" id="counter">{{ shopping_list_count }}</span></li>
+            </ul>
+            <ul class="nav__items list">
+                <li class="nav__item"><a href="{% url 'pass_change' %}" class="nav__link link">Изменить пароль</a></li>
+                <li class="nav__item">
+                    <form method="POST" action="{% url 'signout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="nav__link link" style="background:none; border:none; padding:0; cursor:pointer;">Выход</button>
+                    </form>
+                </li>
+            </ul>  
+        </div>
+    </nav>
+</header>
+{% else %}
+<header class="header">
+    <nav class="nav">
+        <div class="nav__container container">
+            <ul class="nav__items list">
+                <li class="nav__item nav__item_active"><a href="{% url 'index' %}" class="nav__link link">Рецепты</a></li>
+                
+            </ul>
+            <ul class="nav__items list">
+                <li class="nav__item"><a href="{% url 'signin' %}" class="nav__link link">Войти</a></li>
+                <li class="nav__item"><a href="{% url 'signup' %}" class="button button_style_blue">Создать аккаунт</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+{% endif %}

@@ -1,0 +1,30 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Удаление рецепта "{{ recipe.name }}"</title>
+    <link rel="stylesheet" href="{% static 'pages/index.css' %}">
+</head>
+<body class="body">
+{% include 'header.html' %}
+<main class="main container">
+    <div class="main__header">
+        <h1>Удаление рецепта "{{ recipe.name }}"</h1>>
+    </div>
+   <p>Вы уверены, что хотите удалить этот рецепт? Это действие невозможно отменить.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="button button_style_red">Да, удалить</button>
+        <a href="{% url 'change_recipe' slug=recipe.slug %}" class="button">Отмена</a>
+    </form>
+    </div>
+
+
+</main>
+{% include 'footer.html' %}
+</body>
+</html>

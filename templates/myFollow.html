@@ -1,0 +1,75 @@
+<!doctype html>
+{% load static %}
+{% load custom_tags %}
+{% csrf_token %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Мои подписки</title>
+    <link rel="stylesheet" href="{% static 'pages/myFollow.css' %}">
+</head>
+<body class="body">
+{% include 'header.html' %}
+<main class="main container">
+    <div class="main__header">
+        <h1 class="main__title">Мои подписки</h1>
+    </div>
+    <div class="card-list">
+        {% for data in subscribers_data %}
+        <div class="card-user" data-author="{{data.subscription.id}}">
+            <div class="card-user__header">
+                <h2 class="card-user__title">
+                    <a href="{% url 'userpage' data.subscription.username %}" class="link">
+                    {% if data.subscription.first_name and data.subscription.last_name %}
+                        {{data.subscription.first_name}} {{data.subscription.last_name}}
+                    {% else %}
+                        {{data.subscription.username}}
+                    {% endif %}
+                    </a>
+                </h2>
+            </div>
+            <div class="card-user__body">
+                <ul class="card-user__items">
+                    {% for recipe in data.last_recipes %}
+                    <li class="card-user__item">
+                        <div class="recipe" onclick="window.location.href='{% url 'recipe' recipe.slug %}'" style="cursor: pointer;">
+                            <img src="{{recipe.image.url}}" alt="{{recipe.name}}" class="recipe__image">
+                            <h3 class="recipe__title">{{recipe.name}} </h3>
+                            <p class="recipe__text"><span class="icon-time"></span>{{recipe.cooking_time}} мин.</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                    {% if data.recipe_count > 3 %}
+                    <li class="card-user__item">
+                        <a href="{% url 'userpage' data.subscription.username %}" class="card-user__link link">Еще {{data.recipe_count|add:"-3"|ru_pluralize:"рецепт,рецепта,рецептов"}} ...</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="card-user__footer">
+                <button class="button button_style_light-blue button_size_auto" name="subscribe" >Отписаться</button>
+            </div>
+        
+        </div>
+        {% endfor %}
+
+    </div>
+    {% if page.has_other_pages %}
+            {% include "paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+</main>
+{% include 'footer.html' %}
+<script src="{% static 'js/config/config.js' %}"></script>
+<script src="{% static 'js/components/MainCards.js' %}"></script>
+<script src="{% static 'js/components/MyFollow.js' %}"></script>
+<script src="{% static 'js/components/Subscribe.js' %}"></script>
+<script src="{% static 'js/components/Header.js' %}"></script>
+<script src="{% static 'js/api/Api.js'%}"></script>
+<script src="{% static 'myFollow.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<nav aria-label="Переключение страниц">
+    <ul class="pagination">
+        {% if items.has_previous %}
+                <li class="pagination__item"><a class="pagination__link" href="?page={{ items.previous_page_number }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}">&laquo; Предыдущая</a></li>
+        {% else %}
+                <li class="pagination__item disabled"><a class="pagination__link" href="#" tabindex="-1" aria-disabled="true">&laquo; Предыдущая</a></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+                {% if items.number == i %}
+                        <li class="pagination__item"><span class="pagination__link">{{ i }} <span class="sr-only">(текущая)</span></span></li>
+                {% else %}
+                        <li class="pagination__item"><a class="pagination__link link" href="?page={{ i }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}">{{ i }}</a></li>
+                {% endif %}
+        {% endfor %}
+        {% if items.has_next %}
+                <li class="pagination__item"><a class="pagination__link" href="?page={{ items.next_page_number }}{% for tag in selected_tags %}&tags={{ tag }}{% endfor %}">Следующая &raquo;</a></li>
+        {% else %}
+                <li class="pagination__item disabled"><a class="pagination__link" href="#" tabindex="-1" aria-disabled="true">Следующая &raquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>
